@@ -4,7 +4,7 @@
         <meta charset="utf-8"> 
         <meta name="viewport" content="width=device-width, maximum-scale=1.0" />
 
-        <title>Example Student's HCDE 439 Physical Computing Page!</title> 
+        <title>Emily's HCDE 439 Physical Computing Page!</title> 
 
         <link href="style.css" media="screen" rel="stylesheet" type="text/css" />
 
@@ -12,14 +12,83 @@
     <body> 
 
         <div class="header">
-            <h1>Example Student's Assignment 1!</h1>
+            <h1>Emily's Assignment 1! Blinky Lights!</h1>
             <p>
-            <img src="red-panda.jpg" width=400></a>
-            </p>
+            <img src="assignment1.mov" width=400></a>
             <p>
-            Here is all the documentation for assignment 1!
+            Here is all the documentation for assignment 1, where I made 3 lights blink!
             </p>
         </div>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+
+        <div>
+        	<h2>The circuit on my breadboard!</h2>
+        	<p>
+        	<img src="A1_circuit.jpg" width=400></img>
+        	</p>
+        	<p>
+        	Here's the circuit I built. I used 220 ohm resistors for the red and yellow lights and a 100 ohm  resistor for the blue light, because blue LEDs need more voltage than the other colors!
+        	</p>
+        </div>
+        <div>
+        	<h2>The schematic of my circuit!</h2>
+        	<img src="a1_schem.jpg" width=400></img>
+        	</p>
+        	<p>
+        	Here's the schematic of my circuit. All the Blinky lights are directly connected to their own pins so that they can be controlled independently
+        	</p>
+        </div>
+        <div>
+        	<h2>My Arduino Code Snippet</h2>
+        	<pre>
+        	<code>
+ // the setup function runs once when you press reset or power the board
+void setup() {
+  // initialize digital pin LED_BUILTIN as an output.
+  pinMode(2, OUTPUT);
+  pinMode(6, OUTPUT);
+  pinMode(10, OUTPUT);
+}
+
+// the loop function runs over and over again forever
+void loop() {
+  digitalWrite(2, HIGH); // turn the LED on (HIGH is the voltage level)
+  delay(400); // wait for 4/10th of a second
+  digitalWrite(6, HIGH); // turn the LED on (HIGH is the voltage level)
+  delay(400); // wait for 4/10th of a second
+  digitalWrite(10, HIGH); // turn the LED on (HIGH is the voltage level)
+  delay(400); // wait for 4/10th of a second
+  digitalWrite(2, LOW); // turn the LED off by making the voltage LOW
+  delay(400); // wait for 4/10th of a second
+  digitalWrite(6, LOW); // turn the LED off by making the voltage LOW
+  delay(400); // wait for 4/10th of a second
+  digitalWrite(10, LOW); // turn the LED off by making the voltage LOW
+  delay(400); 
+}
+</code>
+</pre>
+</div>
+        	
         
     </body>
 </html>
