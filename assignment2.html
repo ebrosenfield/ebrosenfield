@@ -4,7 +4,7 @@
         <meta charset="utf-8"> 
         <meta name="viewport" content="width=device-width, maximum-scale=1.0" />
 
-        <title>Example Student's HCDE 439 Physical Computing Page!</title> 
+        <title>Emily's HCDE 439 Physical Computing Page!</title> 
 
         <link href="style.css" media="screen" rel="stylesheet" type="text/css" />
 
@@ -12,14 +12,87 @@
     <body> 
 
         <div class="header">
-            <h1>Example Student's Assignment 2!</h1>
+            <h1>Emily's Assignment 2! Fade an LED with a Button!</h1>
             <p>
-            <img src="red-panda.jpg" width=400></a>
-            </p>
+            <image src = "A2_fade.gif"></image>
             <p>
-            Here is all the documentation for assignment 2!
+            Here is all the documentation for assignment 1, where I made an RGB LED fade at the press of a button!
             </p>
         </div>
+        <div>
+        	<h2>The circuit on my breadboard!</h2>
+        	<p>
+        	<img src="A2_circuit.jpeg" width=400></img>
+        	</p>
+        	<p>
+        	Here's the circuit I built. I used 220 ohm resistors for the red and yellow lights and a 100 ohm  resistor for the blue light, because blue LEDs need more voltage than the other colors! I used a 100 ohm resistor for the button.
+        	</p>
+        </div>
+        <div>
+        	<h2>The schematic of my circuit!</h2>
+        	<img src="A2_schematic.jpeg" width=400></img>
+        	</p>
+        	<p>
+        	Here's the schematic of my circuit. The button is connected to pin 2, which right now is an input pin and tells the arduino when the button state is high (pressed button) or low (unpressed button). When the button state is high, it causes the LED to fade colors.
+        	</p>
+        </div>
+        <div>
+        	<h2>My Arduino Code Snippet</h2>
+        	<pre>
+        	<code>
+
+// constants won't change. They're used here to set pin numbers:
+const int buttonPin = 2;     // the number of the pushbutton pin
+const int R = 6;
+const int G = 9;
+const int B = 10;
+
+// variables will change:
+int buttonState = 0;         // variable for reading the pushbutton status
+int lastButtonState = 0;    // variable for storing the last pushbutton status
+
+void setup() {
+  // initialize the LED pin as an output:
+  pinMode(R, OUTPUT);
+  pinMode(G, OUTPUT);
+  pinMode(B, OUTPUT);
+  // initialize the pushbutton pin as an input:
+  pinMode(buttonPin, INPUT);
+  // initialize orange as starting LED color
+  analogWrite(R, 106);
+  analogWrite(G, 13);
+}
+
+void loop() {
+  // read the state of the pushbutton value:
+  buttonState = digitalRead(buttonPin);
+
+  // check if the last button state is different that the current button state. If it is
+  if (buttonState != lastButtonState) {
+    
+    // check if the pushbutton is pressed. If it is, the buttonState is HIGH:
+    if (buttonState == HIGH) {
+      // when button state is HIGH, fade LED
+      for (int i = 0; i < 256; i++) {
+        analogWrite(R, i);
+        delay(10); 
+      }
+      // when button state is LOW, keep LED purple
+    } else {
+      // turn LED purple:
+      analogWrite(R, 106);
+      analogWrite(G, 13);
+      analogWrite(B, 173);
+    }
+  }
+  // update last button state with the current button state
+  lastButtonState = buttonState;
+}
+
+</code>
+</pre>
+</div>
+        	
         
     </body>
 </html>
