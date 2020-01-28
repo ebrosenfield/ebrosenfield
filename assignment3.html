@@ -1,0 +1,95 @@
+<!DOCTYPE html> 
+<html> 
+    <head> 
+        <meta charset="utf-8"> 
+        <meta name="viewport" content="width=device-width, maximum-scale=1.0" />
+
+        <title>Emily's HCDE 439 Physical Computing Page!</title> 
+
+        <link href="style.css" media="screen" rel="stylesheet" type="text/css" />
+
+    </head> 
+    <body> 
+
+        <div class="header">
+            <h1>Emily's Assignment 3! Use Physical Input to Change the State of an LED!</h1>
+            <p>
+            <image src = "A3_input.gif"></image>
+            <p>
+            Here is all the documentation for assignment 1, where I made a red LED get brighter when I cover the photoresistor (here I am covering it with my finger)! When the photoresistor isnt covered, its brightness is proportional to the ambient lighting!
+            </p>
+        </div>
+        <br>
+        
+        
+        <div>
+        	<h2>The circuit on my breadboard!</h2>
+        	<p>
+        	<img src="A3_circuit.JPG" width=400></img>
+        	</p>
+        	<p>
+        	Here's the circuit I built. I used a photoresistor for my R1 and a 100 ohm resistor for my R2. The image below shows the calculations I made to choose 100 ohms as my second resistor.
+        	</p>
+        	<img src="A3_calculations.JPG" width=400></img>
+        </div>
+        <div>
+        	<h2>The schematic of my circuit!</h2>
+        	<img src="A3_schematic.JPG" width=400></img>
+        	</p>
+        	<p>
+        	Here's the schematic of my circuit. The photoresistor changes resistance based on the amount of light detected (Low light = high resistance, bright light = lower resistance). The change in resistance affects the amount of voltage read by input pin A0. I use the changes in voltage reading to affect the state of the LED, controlled by pin 9.
+        	</p>
+        </div>
+        <div>
+        	<h2>Example Serial output!</h2>
+        	<img src="A3_serial.JPG" width=400></img>
+        	</p>
+        	<p>
+        	Here's an example of output from the serial monitor.
+        	</p>
+        </div>
+        <div>
+        	<h2>My Arduino Code Snippet</h2>
+        	<pre>
+        	<code>
+const int sensor = 0; // labeling pin A0 as sensor
+const int led = 9; // labeling pin 9 as led
+
+void setup() {
+  // put your setup code here, to run once:
+  pinMode(sensor, INPUT); // setting up sensor pin to be input
+  pinMode(led, OUTPUT); // setting up led pin to be output
+  Serial.begin(9600); // initializing serial
+}
+
+void loop() {
+  // put your main code here, to run repeatedly:
+  int sens_val = analogRead(sensor); // take a reading of analog read and store it in val
+  sens_val = constrain(sens_val, 0, 320); // limit range of sensor values to between 0 and 320
+  // rationale:
+  // 0 as lower limit because that is what I read in serial when covering photoresistor with finger
+  // 320 as upper limit because that is what I read in serial when shining flashlight on photoresistor
+  int out_val = map(sens_val, 0, 320, 0, 255); // associate sensor value with a output value within range
+  Serial.println("this is the output value"); // printing output values in serial for debugging
+  Serial.println(out_val);
+  Serial.println("this is the sensor value"); // printing sensor values in serial for debugging
+  Serial.println(sens_val); 
+  delay(1000); // 1 second delay to make serial readings easier to follow
+  if (out_val < 5) { // if output value is less than 5, meaning a dark room or covered photo resistor
+    analogWrite(led, 255); // then light led to full brightness
+  } else { 
+    analogWrite(led, out_val); // else light led proportionally to room brightness
+    // example: flashlight on photoresistor will light led to nearly full brightness
+    // example: room lighting will result in a dim led
+  }
+}
+
+// notes: room lighting is about 18, covering light is about 5, flashlight on light is about 320
+
+</code>
+</pre>
+</div>
+        	
+        
+    </body>
+</html>
