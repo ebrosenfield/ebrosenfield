@@ -1,0 +1,84 @@
+<!DOCTYPE html> 
+<html> 
+    <head> 
+        <meta charset="utf-8"> 
+        <meta name="viewport" content="width=device-width, maximum-scale=1.0" />
+
+        <title>Emily's HCDE 439 Physical Computing Page!</title> 
+
+        <link href="style.css" media="screen" rel="stylesheet" type="text/css" />
+
+    </head> 
+    <body> 
+
+        <div class="header">
+            <h1>Emily's Assignment 4! High(er) Voltage and Transistors!</h1>
+            <p>
+            <image src = "A4.GIF"></image>
+            <p>
+            Here is all the documentation for assignment 4, where I used a MOSFET transistor to turn on an LED strip. I also used a much higher voltage than the previous assignments by using a 12V wall plug. I used a Infrared Remote to control the transistor & the LED strip. When you press 5 on the button the LED strip will turn on for 2 seconds.
+            </p>
+        </div>
+        <br>
+        
+        
+        <div>
+        <br>
+        <br>
+        
+        	<h2>The circuit on my breadboard!</h2>
+        	<p>
+        	<img src="A4_circuit.jpg" width=400></img>
+        	</p>
+        	<p>
+        	Here's the circuit I built. I used the IR Remote library to program the IR receiver that I used. When the receiver detects that the button five has been pressed, I analog write to the transistor to turn it, and the LED strip on for 2 seconds. 
+        	</p>
+        </div>
+        <div>
+        	<h2>The schematic of my circuit!</h2>
+        	<img src="A4_schematic.jpg" width=400></img>
+        	</p>
+        	<p>
+        	Here's the schematic of my circuit. You can also see the calculations that I did to make sure my circuit was safe. I looked at the max current and voltage ratings of my transistor and then calculated the max current of the LED strip. The LED strip current is lower than the max current of the resistor - so it is safe to turn on.
+        	</p>
+        </div>
+
+        <div>
+        	<h2>My Arduino Code Snippet</h2>
+        	<pre>
+        	<code>
+#include <IRremote.h> // Including the IR Remote library
+
+const int RECV_PIN = 9; // naming pin 9 to be the receiving pin from the remote
+IRrecv irrecv(RECV_PIN); // sets pin 9 as an input pin that will receive the signal from the remote
+                         // irrecv object handles protocol and processing of remote signals
+decode_results results; // creates object results from decode_results
+const int ledStrip = 3; // naming pin 3 to be ledStrip
+
+
+void setup(){
+  irrecv.enableIRIn(); // starts the IR receiver
+  irrecv.blink13(true); // blinks LED on Arduino board when IR recevier gets a signal from the remote
+  pinMode(ledStrip, OUTPUT); // sets ledStrip pin mode as an OUTPUT
+}
+
+void loop(){
+    if (irrecv.decode(&results)){ // returns true if a code is received (if a button is pressed)
+        switch(results.value){ // stores code received in results.value
+                               // switch handles each IR code
+          case 0xFF38C7: // if the keypad button is "5"
+          analogWrite(ledStrip, 255); // then the LED strip will turn on
+          delay(2000); // LED strip will stay on for 2 seconds
+          analogWrite(ledStrip, 0); // LED strip turns of
+          }
+ 
+        irrecv.resume(); // receiver resumes receiving signals
+    }
+}
+</code>
+</pre>
+</div>
+        	
+        
+    </body>
+</html>
