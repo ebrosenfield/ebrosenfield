@@ -12,31 +12,45 @@
     <body> 
 
         <div class="header">
-            <h1>Emily's Assignment 2! Fade an LED with a Button!</h1>
-            <p>
-            <image src = "A2_fade.gif"></image>
-            <p>
-            Here is all the documentation for assignment 1, where I made an RGB LED fade at the press of a button!
-            </p>
+            <div class = "row">
+              <div class = "column">
+                <h1>Emily's Assignment 2! Fade an LED with a Button!</h1>
+              </br>
+                <p>
+                  Here is all the documentation for assignment 1, where I made an RGB LED fade at the press of a button!
+                </p>
+              </div>
+              <div class = "column">
+                <image src = "A2_fade.gif"></image>
+              </div>
+            </div>
         </div>
-        <div>
-        	<h2>The circuit on my breadboard!</h2>
-        	<p>
-        	<img src="A2_circuit.jpeg" width=400></img>
-        	</p>
-        	<p>
-        	Here's the circuit I built. I used 220 ohm resistors for the red and yellow lights and a 100 ohm  resistor for the blue light, because blue LEDs need more voltage than the other colors! I used a 100 ohm resistor for the button.
-        	</p>
+        <div class = "content">
+          <h2>The circuit on my breadboard!</h2>
+          <div class = "row">
+            <div class = "column">
+              <img src="A2_circuit.jpeg" width=400></img>
+            </div>
+            <div class = "column">
+              <p>
+                Here's the circuit I built. I used 220 ohm resistors for the red and yellow lights and a 100 ohm  resistor for the blue light, because blue LEDs need more voltage than the other colors! I used a 100 ohm resistor for the button.
+              </p>
+            </div>
+          </div>
         </div>
-        <div>
-        	<h2>The schematic of my circuit!</h2>
-        	<img src="A2_schematic.jpeg" width=400></img>
-        	</p>
-        	<p>
-        	Here's the schematic of my circuit. The button is connected to pin 2, which right now is an input pin and tells the arduino when the button state is high (pressed button) or low (unpressed button). When the button state is high, it causes the LED to fade colors.
-        	</p>
+        <div class = "content">
+          <div class = "row">
+            <h2>The schematic of my circuit!</h2>
+            <div class = "column">
+              <img src="A2_schematic.jpeg" width=400></img>
+           </div>
+            <div class = "column">
+             <p>Here's the schematic of my circuit. The button is connected to pin 2, which right now is an input pin and tells the arduino when the button state is high (pressed button) or low (unpressed button). When the button state is high, it causes the LED to fade colors.
+              </p>
+           </div> 	
+         </div>
         </div>
-        <div>
+        <div class = "content">
         	<h2>My Arduino Code Snippet</h2>
         	<pre>
         	<code>

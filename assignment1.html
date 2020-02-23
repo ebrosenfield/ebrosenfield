@@ -12,53 +12,45 @@
     <body> 
 
         <div class="header">
-            <h1>Emily's Assignment 1! Blinky Lights!</h1>
-            <p>
-            <video autoplay="true" src="assignment1.MOV" width="800" height="600" name="Blinky Lights"></video>
-            <p>
-            Here is all the documentation for assignment 1, where I made 3 lights blink!
-            </p>
+          <div class="row">
+              <div class="column left"> 
+                  <h1>Assignment 1! Blinky Lights!</h1>
+                  <p style="width: 75%;">Here is all the documentation for assignment 1, where I made 3 lights blink!</p>
+              </div>
+              <div class="column right">
+                <video autoplay="true" src="assignment1.MOV" width="400" height="400" name="Blinky Lights"></video>
+              </div>
+          </div>             
+      </div>
+        <br>
+        <br>
+        <div class="content">
+        </br>
+        <br>
+        <br>
+        <h2>The circuit on my breadboard!</h2>
+          <div class = "row">
+            <div class = "column">
+              <p><img src="A1_circuit.JPG" width=400 height=400></img></p> 
+            </div>
+            <div class = "column">
+              <p>Here's the circuit I built. I used 220 ohm resistors for the red and yellow lights and a 100 ohm  resistor for the blue light, because blue LEDs need more voltage than the other colors!</p>
+            </div>
+          </div>
         </div>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-
-        <div>
-        	<h2>The circuit on my breadboard!</h2>
-        	<p>
-        	<img src="A1_circuit.JPG" width=400></img>
-        	</p>
-        	<p>
-        	Here's the circuit I built. I used 220 ohm resistors for the red and yellow lights and a 100 ohm  resistor for the blue light, because blue LEDs need more voltage than the other colors!
-        	</p>
+        <div class = "content">
+          <h2>The schematic of my circuit!</h2>
+          <div class = "row">
+            <div class = "column">
+              <p><img src="a1_schem.JPG" width=400></img></p>
+            </div>
+            <div class = "column">
+              <p>Here's the schematic of my circuit. All the Blinky lights are directly connected to their own pins so that they can be controlled independently
+              </p>
+            </div>
+          </div>
         </div>
-        <div>
-        	<h2>The schematic of my circuit!</h2>
-        	<img src="a1_schem.JPG" width=400></img>
-        	</p>
-        	<p>
-        	Here's the schematic of my circuit. All the Blinky lights are directly connected to their own pins so that they can be controlled independently
-        	</p>
-        </div>
-        <div>
+        <div class = "content">
         	<h2>My Arduino Code Snippet</h2>
         	<pre>
         	<code>

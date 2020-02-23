@@ -12,38 +12,55 @@
     <body> 
 
         <div class="header">
-            <h1>Emily's Assignment 4! High(er) Voltage and Transistors!</h1>
-            <p>
-            <image src = "A4.GIF"></image>
-            <p>
-            Here is all the documentation for assignment 4, where I used a MOSFET transistor to turn on an LED strip. I also used a much higher voltage than the previous assignments by using a 12V wall plug. I used a Infrared Remote to control the transistor & the LED strip. When you press 5 on the button the LED strip will turn on for 2 seconds.
-            </p>
+            <div class = "row">
+                <div class = "column">
+                    <h1>Emily's Assignment 4! High(ER) Voltage and Transistors!</h1>
+                    <p>Here is all the documentation for assignment 4, where I used a 
+                        MOSFET transistor to turn on an LED strip. I also used a much 
+                        higher voltage than the previous assignments by using a 12V 
+                        wall plug. I used a Infrared Remote to control the transistor 
+                        & the LED strip. When you press 5 on the button the LED strip 
+                        will turn on for 2 seconds.</p>
+                </div>
+                <div class = "column">
+                    <image src = "A4.GIF"></image>
+                </div>
+            </div>
         </div>
-        <br>
         
-        
-        <div>
-        <br>
-        <br>
-        
+        <div class = "content">
         	<h2>The circuit on my breadboard!</h2>
-        	<p>
-        	<img src="A4_circuit.jpg" width=400></img>
-        	</p>
-        	<p>
-        	Here's the circuit I built. I used the IR Remote library to program the IR receiver that I used. When the receiver detects that the button five has been pressed, I analog write to the transistor to turn it, and the LED strip on for 2 seconds. 
-        	</p>
-        </div>
-        <div>
-        	<h2>The schematic of my circuit!</h2>
-        	<img src="A4_schematic.jpg" width=400></img>
-        	</p>
-        	<p>
-        	Here's the schematic of my circuit. You can also see the calculations that I did to make sure my circuit was safe. I looked at the max current and voltage ratings of my transistor and then calculated the max current of the LED strip. The LED strip current is lower than the max current of the resistor - so it is safe to turn on.
-        	</p>
+        	<div class = "row">
+                <div class = "column">
+                    <img src="A4_circuit.jpg" width=400></img>
+                </div>
+                <div class = "row">
+                    <p>Here's the circuit I built. I used the IR Remote 
+                        library to program the IR receiver that I used. 
+                        When the receiver detects that the button five has been 
+                        pressed, I analog write to the transistor to turn it, and the 
+                        LED strip on for 2 seconds. </p>
+                </div>
+            </div>
         </div>
 
-        <div>
+        <div class = "content">
+            <h2>The schematic of my circuit!</h2>
+            <div class = "row">
+                <div class = "column">
+                    <img src="A4_schematic.jpg" width=400></img>
+                </div>
+                <div class = "column">
+                    <p>Here's the schematic of my circuit. You can also see the calculations 
+                        that I did to make sure my circuit was safe. I looked at the max 
+                        current and voltage ratings of my transistor and then calculated 
+                        the max current of the LED strip. The LED strip current is lower than 
+                        the max current of the resistor - so it is safe to turn on.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class = "content">
         	<h2>My Arduino Code Snippet</h2>
         	<pre>
         	<code>
