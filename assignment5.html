@@ -1,0 +1,258 @@
+<!DOCTYPE html> 
+<html> 
+    <head> 
+        <meta charset="utf-8"> 
+        <meta name="viewport" content="width=device-width, maximum-scale=1.0" />
+
+        <title>Emily's HCDE 439 Physical Computing Page!</title> 
+
+        <link href="style.css" media="screen" rel="stylesheet" type="text/css" />
+
+    </head> 
+    <body> 
+
+        <div class="header">
+            <div class = "row">
+                <div class = "column">
+                    <h1>Emily's Assignment 5 & 6! Talking with the web!</h1>
+                    <p>Here is all the documentation for Assignments 5 & 6. For assignment 5
+                         I used p5 to write a webpage of a recursive tree. The webpage is dynamic and responds to 
+                        the joystick input. The branch angles and background color changes depending
+                        on the position of the joystick. For assignment 6, I made the webpage talk to 
+                        the Arduino to turn on an LED when the left arrow is pressed on the keyboard.
+                    </p>
+                </div>
+            </div>
+        </div>
+        
+        <div class = "content">
+        	<div class = "row">
+                <h2>The webpage in action!</h2>
+                <div class = "column">
+                    
+                    <img src="A5_a2web.GIF" width=400></img>
+                </div>
+                <div class = "row">
+                    <p>Here's the webpage of my recursive tree in action. 
+                        The angle of the branch responds to the position of the joystick along the 
+                        x-axis. The background color responds to the position of the joystick along 
+                        the y-axis. </p>
+                </div>
+            </div>
+        </div>
+
+        <div class = "content">
+            <h2>The web talking to my Arduino - in action!</h2>
+            <div class = "row">
+                <div class = "column">
+                    <img src="A5_web2a.GIF" width=400></img>
+                </div>
+                <div class = "column">
+                    <p>Here's the arduino responding to the webpage. When you press
+                        the left arrow on the keyboard while the page is open, the LED
+                        turns on. If you press the right arrow on the keyboard, the LED
+                        will turn off. 
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class = "content">
+            <h2>The circuit on my breadboard!</h2>
+            <div class = "row">
+                <div class = "column">
+                    <img src = "A5_circuit.jpeg" width=400></img>
+                </div>
+                <div class = "column">
+                    <p>Here's the circuit of the joystick and the LED on my breadboard.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class = "content">
+            <h2>The schematic of my circuit!</h2>
+            <div class = "row">
+                <div class = "column">
+                    <img src = A5_schematic.jpeg width="400"></img>
+                </div>
+                <div class = "column">
+                    <p>Here's the schematic that I drew for my circuit.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class = "content">
+        	<h2>My Arduino Code Snippet</h2>
+        	<pre>
+        	<code>int x = A1; // call A1 pin x
+int y = A0; // call A0 pin y
+int LED = 5; // call pin 5 LED
+// int key = 2;
+
+// start at (0,0)
+int xval = 0; 
+int yval = 0;
+
+void setup() {
+  // put your setup code here, to run once:
+  Serial.begin(9600); // set up serial
+  Serial.setTimeout(10); // set timeout
+  pinMode(LED, OUTPUT); // set LED pin to output
+}
+
+void loop() {
+  // put your main code here, to run repeatedly:
+  xval = analogRead(x); // read x position
+  yval = analogRead(y); // read y position
+  // keyval = analogRead(key);
+
+  // write array to serial that includes x and y position
+  Serial.print("[");
+  Serial.print(xval);
+  Serial.print(", ");
+  Serial.print(yval);
+  Serial.println("]");
+ 
+  // reads from serial
+  if (Serial.available() > 0) { // if serial reading
+    int inByte = Serial.read(); // store reading in inByte
+    Serial.write(inByte); // send as raw binary data
+    analogWrite(LED, inByte); // turns on LED
+  }
+}
+            </code>
+            </pre>
+        </div>
+
+        <div class = "content">
+        	<h2>My Javascript Code Snippet</h2>
+        	<pre>
+        	<code>var serial; // variable to hold an instance of the serialport library
+var portName = '/dev/tty.usbmodem1411' //rename to the name of your port
+var dataarray = []; //some data coming in over serial!
+var xPos = 0; // initialize x position of joystick
+var yPos = 0; // initialize y position of joystick
+
+
+function setup() {
+  serial = new p5.SerialPort();       // make a new instance of the serialport library
+  serial.on('list', printList);       // set a callback function for the serialport list event
+  serial.on('connected', serverConnected); // callback for connecting to the server
+  serial.on('open', portOpen);        // callback for the port opening
+  serial.on('data', serialEvent);     // callback for when new data arrives
+  serial.on('error', serialError);    // callback for errors
+  serial.on('close', portClose);      // callback for the port closing
+ 
+  serial.list();                      // list the serial ports
+  serial.open(portName);              // open a serial port
+  createCanvas(1200, 800);            // create canvas size
+  
+}
+ 
+// get the list of ports:
+function printList(portList) {
+ // portList is an array of serial port names
+ for (var i = 0; i < portList.length; i++) {
+ // Display the list the console:
+   print(i + " " + portList[i]);
+ }
+}
+
+function serverConnected() {
+  print('connected to server.');
+}
+ 
+function portOpen() {
+  print('the serial port opened.')
+}
+ 
+function serialError(err) {
+  print('Something went wrong with the serial port. ' + err);
+}
+ 
+function portClose() {
+  print('The serial port closed.');
+}
+
+// read in serial from the Arduino
+function serialEvent() {
+  if (serial.available()) {
+    var datastring = serial.readLine(); // readin some serial
+    var newarray; 
+    try {
+      newarray = JSON.parse(datastring); // can we parse the serial
+      } catch(err) {
+          //console.log(err);
+    }
+    if (typeof(newarray) == 'object') {
+      dataarray = newarray;
+    }
+    console.log("got back " + datastring); // useful for debugging - can view in "inspect" console
+  } 
+}
+
+// runs when a key is pressed
+function keyPressed() {
+  if (keyCode == LEFT_ARROW) { // if key is the left arrow key
+    value = 255; // will translate to digital high when value is passed to arduino
+  } else if (keyCode == RIGHT_ARROW) { // if key is right arrow key
+    value = 0; // will translate to digital low when value is passed to arduino
+  }
+  serial.write(value); // write value to serial, value will be 'on' for left arrow key and 'off' for 
+                       // right arrow key
+}
+
+
+function draw() {
+  
+  // map Y position of joystick to RGB value
+  yPos = map(dataarray[1], 0, 681, 0, 255); // 0 - 681 = joystick Y range, 0 - 255 = RGB range
+  background(yPos, 204, 0); // change background color depending on Y position of joystick
+  frameRate(30);
+
+  // map X position of joystick to width of canvas
+  xPos = map(dataarray[0], 0, 681, 0, 1200); // 0 - 681 = joystick X range, 0 - 1200 = canvas width range
+  let a = (xPos / width) * 90; // change branch angle depending on X position of joystick
+
+  theta = radians(a); // change angle to radians
+ 
+  
+  translate(width / 2, height); // sets the tree along the bottom (when /2 it goes to middle)
+  stroke(51); // sets stroke color to dark grey
+  branch(120); // calls branch function, initial length 120
+}
+
+function branch(length) {
+
+  strokeWeight(2); // sets stroke weight to 2
+  line(0, 0, 0, -length); // draws first line
+  translate(0, -length); // 
+
+  
+  length *= 0.66; // minimizes branch length to 2/3 original length each time
+
+  
+  if (length > 2) { // will stop recursion when length is less than 2 px
+     push(); // saves current drawing settings
+     rotate(theta); // rotates the branch right
+     line(0, 0, 0, -length); // draws line
+     translate(0, -length); // displace object
+     branch(length); // call recursive method
+     pop(); // restores drawing settings
+
+     push(); // saves current drawing settings
+     rotate(-theta); // rotates the branch left
+     line(0, 0, 0, -length); // draws line
+     translate(0, -length); // displace object
+     branch(length); // call recursive method
+     pop(); // restores drawing settings
+  }
+}
+
+            </code>
+            </pre>
+        </div>
+        	
+        
+    </body>
+</html>
