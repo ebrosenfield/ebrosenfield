@@ -14,55 +14,244 @@
         <div class="header">
             <div class = "row">
                 <div class = "column">
-                    <h1>Final Project: Apartment Pranks</h1>
-                    <p>For my final project, I am going to 'hack' our fruit bowl. With capacitor sensing 
-                        and a small speaker, when someone touches the bowl, it will trigger the speaker to 
-                        play Fruit Salad by the Wiggles.
+                    <h1>Final Project: "Singing" Penguin</h1>
+                    <p>For my final project, I am going to hide electronics in the sweater of my stuffed Penguin, 
+                        Mel. When I touch Mel's left flipper, a buzzer will play an odd and annoying version of
+                        the chorus from Let it Go. 
                     </p>
                 </div>
-                <div class = "column">
-                    <img src = "fruit_salad.png"></img>
-                </div>
+
                 </div>
             </div>
         </div>
 
         <div class = "content">
             <h2>My plan of attack</h2>
-            <p>I am going to 'hack' our fruit bowl to play Fruit Salad when someone touches
-                the metal bowl. To do this I will need to accomplish the following: </p>
-            <p>(1) Rig the fruit bowl with a capacitor sensor to trigger a response
-                    when someone touches the bowl.
-            </p>
-            <p>(2) Get a mini speaker to play the song I want off of a Micro-SD card.</p>
-            <p>(3) Get the capacitor sensor and the mini speaker to work together 
-                    so that one triggers the other.
-            </p>
-            <p>(4) Obscure the electronics below the fruit bowl in a detachable 
-                    module.
-            </p>           
+            <div class = "row">
+                <div class = "column">
+                    <img src = "final_concept.png" width="550"></img>
+                </div>
+                <div class = "column">
+                    <p>I am going to make my stuffed penguin, Mel sing when someone touches
+                        his left flipper. To do this I will need to accomplish the following: </p>
+                    <p>(1) Hide a capacitive sensor on his flipper to trigger a response
+                            when someone grabs his flipper.
+                    </p>
+                    <p>(2) Write a program to play the tune from Let it Go on a passive buzzer.</p>
+                    <p>(3) Get the capacitive sensor and the passive buzzer to work together.
+                    </p>
+                    <p>(4) Obscure the electronics in Mel's sweater, so it can be easily taken apart
+                        and removed.
+                    </p> 
+                </div>
+            </div>
+          
         </div>
 
         <div class = "content">
             <h2>List of materials</h2>
             <ul>
-                <li>Arduino</li>
-                <li>Micro-SD card adapter</li>
-                <li>8-ohm speaker</li>
-                <li>Micro-SD card</li>
+                <li>Arduino Uno</li>
+                <li>Passive Buzzer</li>
+                <li>Wires</li>
+                <li>Alligator Clip</li>
                 <li>Mini breadboard</li>
-                <li>BC 546b NPN transistor</li>
-                <li>9V battery</li>
-                <li>Aluminum foil</li>
-                <li>Container/product to obscure electronics</li>
+                <li>1M Ohm Resistor</li>
             </ul>
+        </div>
+
+        <div class = "content">
+            <h2>Demo of Mel "singing" Let it Go!</h2>
+            <iframe width="560" height="315" src="https://www.youtube.com/embed/aLZO2Ei5ISY" 
+            frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" 
+            allowfullscreen></iframe>
+        </div>
+
+        <div class = "content">
+        	<div class = "row">
+                <h2>Here's the schematic of my circuit!</h2>
+                <div class = "column">
+                    
+                    <img src="final_schematic.png" width=550></img>
+                </div>
+                <div class = "row">
+                    <p>Here's what the schematic of my circuit looks like. It's really quite simple and 
+                        is broken into two parts. On the left is the part of my circuit that handles 
+                    capacitive sensing. I used a 1M Ohm resistor, which means that a person has to make 
+                contact with the metal end of the alligator clip to trigger a response. On the right is 
+            a very simple circuit of the buzzer. </p>
+                </div>
+            </div>
+        </div>
+
+
+        <div class = "content">
+        	<div class = "row">
+                <h2>Here's the circuit on my breadboard!</h2>
+                <div class = "column">
+                    
+                    <img src="final_circuit.jpg" width=400></img>
+                </div>
+                <div class = "row">
+                    <p>Here's what the circuit looked like on my breadboard. Unfortunately, due to the
+                        timing of this project and COVID-19, I was unable to visit a Makerspace to solder
+                    the pieces together. But that's okay because now I still have all my parts available
+                to tinker with for the rest of this COVID-19 - stay home and avoid being bored - period of time.  </p>
+                </div>
+            </div>
+        </div>
+
+        <div class = "content">
+        	<div class = "row">
+                <h2>A little bit about how I got the buzzer to play a melody!</h2>
+                <div class = "column">
+                    
+                    <img src="final_music.png" width=400></img>
+                </div>
+                <div class = "row">
+                    <p>The hardest part of this project was re-teaching myself how to read sheet music. As you will 
+                        see later in my code snippet, I used the pitches.h library to translate each note of the 
+                        melody. To store information about each note, I created 3 arrays of the same length. The array
+                        for Melody stored all of the Tones for each note, the array Duration stored how long each note 
+                        played, and the array Pauses stored how long the buzzer should pause before playing the next
+                        note. Overall, the melody is not perfect and still sounds weird since it is played by a buzzer.
+                        But my goal was to make the melody RECOGNIZEABLE, which I think it is.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class = "content">
+        	<h2>My Arduino Code Snippet</h2>
+        	<pre>
+        	<code>
+
+                #include "pitches.h"
+                #include <CapacitiveSensor.h>
+                
+                CapacitiveSensor   cs_4_2 = CapacitiveSensor(4,2); // 10K resistor between pins 4 & 2, pin 2 is sensor pin, add alligator clips
+                
+                // Two things need to be created: the array for the notes of the melody (in order)
+                // and the duration of each (think of it like sheet music in two parts)
+                // BOTH ARRAYS MUST BE THE SAME SIZE!
+                
+                // The melody array 
+                int melody[] = {
+                  NOTE_G5, NOTE_A5, NOTE_B5, /*let it goooooooo */
+                  NOTE_D5, NOTE_B5, NOTE_A5, /*let it goooooooo */
+                  NOTE_B5, NOTE_A5, /* CAN'T */
+                  NOTE_G5, NOTE_G5, NOTE_G5, NOTE_G5, NOTE_A5, NOTE_B5, /* HOLD IT BACK ANYMORE */
+                  NOTE_E5, NOTE_F5, NOTE_G5, /*LET IT GOOOO */
+                  NOTE_D5, NOTE_B5, NOTE_A5, /* LET IT GOOO */
+                  NOTE_G5, NOTE_A5, NOTE_B5, /* TURN AWAY */
+                  NOTE_B5, NOTE_C6, NOTE_B5, NOTE_A5, NOTE_G5, /* AND SLAM THE */ 
+                  NOTE_A5, NOTE_G5, /* DOOR */
+                  NOTE_D5, NOTE_B4, NOTE_A4, /* I DON'T CARE */
+                  NOTE_G4, NOTE_G4, /* WHAT THEY'RE */
+                  NOTE_D5, NOTE_B4, NOTE_G4, /* GOING TO SAY */
+                  NOTE_G4, NOTE_G4, /* LET THE */
+                  NOTE_F4, NOTE_D4, NOTE_D4, /* STORM RAGE ON, PAUSE */ 
+                  NOTE_G4, /* THE */ 
+                  NOTE_C5, NOTE_C5, NOTE_B4, NOTE_C5, NOTE_B4, NOTE_C5, NOTE_C5, /* COLD NEVER BOTHERED ME */
+                  NOTE_B4, NOTE_G4 /* ANYWAYS */
+                };
+                
+                // The note duration, 8 = 8th note, 4 = quarter note, etc.
+                int durations[] = {
+                  8, 8, 1, 
+                  8, 8, 1, 
+                  8, 8,
+                  8, 8, 4, 8, 4, 1,
+                  8, 8, 1,
+                  8, 8, 1,
+                  8, 8, 2,
+                  4, 8, 4, 8, 8,
+                  8, 1,
+                  4, 4, 1,
+                  4, 4,
+                  3, 3, 1,
+                  8, 8,
+                  3, 3, 1,
+                  8,
+                  4, 4, 4, 4, 4, 4, 4,
+                  4, 4
+                };
+                
+                // The pauses between notes
+                const int normal_pause = 1.5;
+                // The pause shortens for notes that are connected and should transition more smoothly
+                int pauses[] = {
+                  normal_pause, normal_pause, normal_pause, /*let it goooooooo */
+                  normal_pause, normal_pause, normal_pause, /*let it goooooooo */
+                  normal_pause, normal_pause, /* CAN'T */
+                  normal_pause, normal_pause, normal_pause, normal_pause, normal_pause, normal_pause, /* HOLD IT BACK ANYMORE */
+                  normal_pause, normal_pause, normal_pause, /*LET IT GOOOO */
+                  normal_pause, normal_pause, normal_pause, /* LET IT GOOO */
+                  normal_pause, normal_pause, normal_pause, /* TURN AWAY */
+                  normal_pause, 1, normal_pause, 1, normal_pause, /* AND SLAM THE */ /*FIGURE OUT HOW TO SLOW PAUSE BETWEEN CONNECTED NOTES?*/
+                  1, normal_pause, /* DOOR */
+                  normal_pause, normal_pause, normal_pause, /* I DON'T CARE */
+                  normal_pause, normal_pause, /* WHAT THEY'RE */
+                  normal_pause, normal_pause, normal_pause, /* GOING TO SAY */
+                  normal_pause, normal_pause, /* LET THE */
+                  normal_pause, normal_pause, normal_pause, /* STORM RAGE ON, PAUSE */ 
+                  normal_pause, 
+                  normal_pause, normal_pause, normal_pause, normal_pause, normal_pause, normal_pause, normal_pause,
+                  normal_pause, normal_pause
+                };
+                
+                // determine the length of the arrays to use in the loop iteration
+                int songLength = sizeof(melody)/sizeof(melody[0]);
+                
+                
+                void setup() {
+                   cs_4_2.set_CS_AutocaL_Millis(0xFFFFFFFF);     // turn off autocalibrate on channel 1 - just as an example
+                   Serial.begin(9600);
+                
+                }
+                
+                void loop() {
+                    long start = millis();
+                    long total1 =  cs_4_2.capacitiveSensor(30);
+                
+                    Serial.print(millis() - start);        // check on performance in milliseconds
+                    Serial.print("\t");                    // tab character for debug window spacing
+                    Serial.println(total1);                  // print sensor output 1
+                
+                    delay(10);                             // arbitrary delay to limit data to serial port 
+                
+                    // if sensor has been touched, play song
+                    if (total1 > 500) {
+                      // Iterate through all three arrays, stop when equal to size of melody array   
+                      for (int thisNote = 0; thisNote < songLength; thisNote++){
+                        // determine the duration of the notes that the computer understands
+                        // divide 1000 by the value, so the first note lasts for 1000/8 milliseconds
+                        int duration = 1000/ durations[thisNote];
+                        // play tone and duration for thisNote
+                        tone(8, melody[thisNote], duration);
+                        // pause between notes
+                        int pause = duration * pauses[thisNote];
+                        delay(pause);
+                        // stop the tone
+                        noTone(8);
+                      }
+                    }
+                }
+            </code>
+            </pre>
         </div>
 
         <div class = "content">
             <h2>Resources</h2>
             <ul>
-                <li>https://maker.pro/arduino/projects/arduino-audio-player</li>
-                <li>https://www.instructables.com/id/Play-Music-With-Arduino/</li>
+                <li><a href="https://www.anneku.com/scores/let_it_go_easy_piano.pdf">Easy Let
+                it Go Piano Sheet Music</a></li>
+                <li><a href="https://www.musicnotes.com/now/tips/how-to-read-sheet-music/">How to
+                Read Sheet Music</a></li>
+                <li><a href="https://www.liveabout.com/pitch-notation-and-octave-naming-2701389">
+                Pitch Notation</a></li>
+                <li><a href="https://create.arduino.cc/projecthub/GeneralSpud/passive-buzzer-song-take-on-me-by-a-ha-0f04a8">
+                Project Inspiration, Code Help, pitches.h</a></li>
             </ul>
         </div>
     </body>
